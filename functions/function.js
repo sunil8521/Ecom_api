@@ -2,7 +2,15 @@ import userModel from "../schema.js";
 import errorHandle from "../error/error.js";
 
 export const Home = (req, res) => {
-  res.json({ message: "App is running" });
+  const baseUrl = `${req.protocol}://${req.get("host")}`;
+  res.json({ message: "App is running",Routes:{
+    To_upload_image:`${baseUrl}/upload`,
+    To_show_allproducts:`${baseUrl}/allproduct`,
+    To_add_products:`${baseUrl}/Addproduct`,
+    To_update_products:`${baseUrl}/updateproduct/(id)`,
+    To_delete_products:`${baseUrl}/delproduct/(id)`,
+
+  } });
 };
 
 export const Upload = (req, res, next) => {
