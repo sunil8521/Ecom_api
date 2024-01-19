@@ -3,14 +3,16 @@ import errorHandle from "../error/error.js";
 
 export const Home = (req, res) => {
   const baseUrl = `${req.protocol}://${req.get("host")}`;
-  res.json({ message: "App is running",Routes:{
-    To_upload_image:`${baseUrl}/upload`,
-    To_show_allproducts:`${baseUrl}/allproduct`,
-    To_add_products:`${baseUrl}/Addproduct`,
-    To_update_products:`${baseUrl}/updateproduct/(id)`,
-    To_delete_products:`${baseUrl}/delproduct/(id)`,
-
-  } });
+  res.json({
+    message: "App is running",
+    Routes: {
+      To_upload_image: `${baseUrl}/upload`,
+      To_show_allproducts: `${baseUrl}/allproduct`,
+      To_add_products: `${baseUrl}/Addproduct`,
+      To_update_products: `${baseUrl}/updateproduct/(id)`,
+      To_delete_products: `${baseUrl}/delproduct/(id)`,
+    },
+  });
 };
 
 export const Upload = (req, res, next) => {
@@ -21,10 +23,15 @@ export const Upload = (req, res, next) => {
       image_url: `${baseUrl}/images/${req.file.filename}`,
     });
   } catch (error) {
-    if(error.name =="TypeError"){
-      return next(new errorHandle("No image file selected. Please choose an image to upload.", 400));
+    if (error.name == "TypeError") {
+      return next(
+        new errorHandle(
+          "No image file selected. Please choose an image to upload.",
+          400
+        )
+      );
     }
-    return next(error)
+    return next(error);
   }
 };
 
@@ -67,6 +74,17 @@ export const Addproduct = async (req, res, next) => {
       );
       return next(new errorHandle(ValidationError.join(", "), 400));
     }
+    return next(error);
+  }
+};
+export const Getproduct = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const Findone = await userModel.findOne({ id: id });
+    return !Findone
+      ? next(new errorHandle("Product not found", 404))
+      : res.status(200).json(Findone);
+  } catch (error) {
     return next(error);
   }
 };
