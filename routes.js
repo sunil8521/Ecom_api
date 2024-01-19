@@ -1,7 +1,7 @@
 import express from "express";
 import path from "path";
 import multer from "multer";
-import { Home, Upload,Addproduct,Allproduct,Delproduct,Updateproduct } from "./functions/function.js";
+import { Home, Upload,Addproduct,Allproduct,Getproduct,Delproduct,Updateproduct } from "./functions/function.js";
 const router = express.Router();
 router.get("/", Home);
 
@@ -17,4 +17,5 @@ router.get("/allproduct",Allproduct)
 router.post("/addproduct",Addproduct)
 router.delete("/delproduct/:id",Delproduct)
 router.patch("/updateproduct/:id",Updateproduct)
+router.get("/getproduct/:id",Getproduct)
 export default router;
